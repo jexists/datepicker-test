@@ -1,0 +1,124 @@
+.auction_picker {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.remaining_time_text {
+  color: #9b9b9b;
+  text-align: center;
+  margin-top: 5px;
+  padding: 0 8px;
+}
+
+.auction_time_picker {
+  margin-left: 10px;
+  border: 1px solid #eceef0;
+  // box-shadow: 0 0 0 3px #eceef0;
+  // background: #fff;
+  border-radius: 2px;
+  box-shadow:
+    0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 6px 16px 0 rgba(0, 0, 0, 0.08),
+    0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  height: 308px;
+  overflow: hidden;
+  font-weight: 500;
+}
+
+.time_header {
+  border-bottom: 1px solid #eceef0;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.time_body {
+  display: flex;
+  justify-content: flex-start;
+  height: 100%;
+  // background-color: #0ff;
+  // height: 228px;
+  // border-bottom: 1px solid #eceef0;
+  .time_text {
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .count_text {
+    font-size: 13px;
+    color: #9b9b9b;
+  }
+
+  .hour_flicking {
+    border-right: 1px solid #eceef0;
+    .date_panel {
+      width: 36px;
+    }
+  }
+
+  .min_flicking {
+    .date_panel {
+      display: flex;
+      width: 60px;
+      .min_view {
+        width: 30px;
+      }
+    }
+  }
+
+  .date_panel {
+    // padding: 0 10px;
+    height: 32px;
+    text-align: center;
+    line-height: 32px;
+  }
+}
+
+.date_panel {
+  &.active {
+    background-color: #eaf2f9;
+  }
+  &.disabled {
+    color: #9b9b9b;
+    background-color: #f1f1f1;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .auction_picker {
+    display: block;
+  }
+  // .time_header {
+  //   display: none;
+  // }
+
+  .auction_time_picker {
+    margin: 0;
+    margin-top: 20px;
+    height: 220px;
+  }
+
+  .time_body {
+    .count_text {
+      width: 30%;
+    }
+    .hour_flicking {
+      width: 50%;
+      .date_panel {
+        width: 100%;
+      }
+    }
+
+    .min_flicking {
+      width: 50%;
+      .date_panel {
+        width: 100%;
+        justify-content: center;
+        .min_view {
+          width: 30%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+/* You can add global styles to this file, and also import other style files */
+@import "ng-zorro-antd/ng-zorro-antd.min.css";
+@import "@egjs/flicking/dist/flicking.css";
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  padding: 20px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.w_100 {
+  width: 100%;
+}
+
+.gray_text {
+  color: #9b9b9b;
+  font-size: 14px;
+}
+
+.text_left {
+  text-align: left;
+}
+
+.date_picker_button {
+  color: #bfbfbf;
+}

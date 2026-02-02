@@ -1,0 +1,73 @@
+<!-- <nz-date-picker nzSize="large" [nzShowTime]="{ nzFormat: 'HH:mm' }" [(ngModel)]="end_datetime" name="end_datetime"
+  nzFormat="yyyy-MM-dd HH:mm:ss" nzPlaceHolder="경매 종료일" [nzDisabledDate]="disabledDate"
+  (ngModelChange)="getSameEndDatetimeAuctionCount()">
+</nz-date-picker> -->
+
+
+<button nz-button nzSize="large" nzType="default" nzBlock type="button" class="text_left"
+  [ngClass]="{'date_picker_button': !end_datetime}" (click)="openEndDatetimeView()">
+  {{end_datetime ? (end_datetime | datetime: 'sec'):'경매 종료일'}}</button>
+
+
+@if (end_datetime) {
+<div class="remaining_time_text">
+  @if (auction_end_datetime >= 0) {
+  남은 시간 : {{auction_end_datetime | secondsToTime}}
+  } @else { 종료 }
+</div>
+}
+
+
+
+<nz-modal [(nzVisible)]="isEndDatetimeView" nzTitle="경매 종료일 설정" [nzFooter]="null" (nzOnCancel)="closeEndDatetimeView()"
+  nzClassName="datepicker_modal" [nzWidth]="390" [nzStyle]="nzmodalStyle">
+  <ng-container *nzModalContent>
+
+    <div class="auction_picker">
+      <nz-date-picker nzInline [(ngModel)]="date" [nzDisabledDate]="disabledDate"
+        (ngModelChange)="getEndDatetimeAuctionCount($event)"></nz-date-picker>
+
+      @if (date){
+      <div class="auction_time_picker">
+        <div class="time_header">
+          {{sel_hour | number:'2.0'}}:{{sel_min | number:'2.0'}}
+        </div>
+        <div class="time_body">
+          <!-- <ngx-flicking [options]="flickingOptionsForHour" class="hour_flicking" (changed)="getAuctionCount($event)" -->
+          <ngx-flicking [options]="flickingOptionsForHour" class="hour_flicking" #flickHour>
+            <div flicking-panel class="date_panel" *ngFor="let hour of hours; let index = index"
+              (click)="clickHour(index)" [ngClass]="{'active': sel_hour == index}">
+              <div class="time_text">{{hour}}</div>
+            </div>
+          </ngx-flicking>
+
+          <ngx-flicking [options]="flickingOptionsForMin" class="min_flicking" #flickMin>
+            <!-- (changed)="setSelMin($event)" #flickMin> -->
+            <div flicking-panel class="date_panel" *ngFor="let min of mins; let index = index; trackBy: trackByIndex"
+              (click)="clickMin(index)" [ngClass]="{'active': sel_min === index, 'disabled': countMap[index] >= 3 || index === 0 }">
+              <div class="time_text min_view">{{min}}</div>
+              <div class="count_text">{{ countMap[index] || 0 }}건</div>
+            </div>
+          </ngx-flicking>
+        </div>
+      </div>
+      }
+    </div>
+
+    @if (date && isAuctionTimeInvalidValue) {
+    <div class="gray_text" style="margin-top: 25px;">
+      @switch (auctionInvalidReasonValue) {
+      @case ('TIME') { 경매 마감 시간은 24시간 이후만 선택할 수 있어요. }
+      @case ('MIN') { 정각 시간은 마감시간 분산을 위해 선택할 수 없어요. }
+      @case ('COUNT') { 해당 시간은 마감시간 분산을 위해 선택할 수 없어요. }
+      }
+    </div>
+    }
+
+    <div class="mt-20 w_100">
+      <button nz-button nzSize="large" nzType="primary" nzBlock type="button" [disabled]="isAuctionTimeInvalidValue"
+        (click)="setMarketAuctionTime()">확인</button>
+    </div>
+
+  </ng-container>
+</nz-modal>
